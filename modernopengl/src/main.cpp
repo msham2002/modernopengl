@@ -24,7 +24,7 @@
 SDL_Window* window = NULL;
 SDL_GLContext context;
 
-const GLint WIDTH = 1280, HEIGHT = 640;
+const GLint WIDTH = 1680, HEIGHT = 780;
 
 void close() {
 	SDL_GL_DeleteContext(context);
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 	
 	IndexBuffer ib(indices, 6);
 	
-	glm::mat4 proj = glm::ortho(0.0f, 1280.0f, 0.0f, 640.0f, -1.0f, 1.0f);
+	glm::mat4 proj = glm::ortho(0.0f, 1680.0f, 0.0f, 780.0f, -1.0f, 1.0f);
 	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 	glm::mat4 mvp = proj * view; 
 	

@@ -15,11 +15,20 @@
 #include "Map.h"
 
 
-class Player{
+class Player {
 private:
 
 	float centerX = 208.0f;
 	float centerY = 288.0f;
+
+	//test centers
+	float cx = 208.0f;
+	float cy = 288.0f;
+
+	float dx2 = 0.0f;
+	float dy2 = 0.0f;
+
+	float rot = 0.0f;
 
 	//Player
 	float positions[16] = { //centery 288, y1 280, y2 296 
@@ -52,6 +61,9 @@ private:
 	IndexBuffer lib;
 	Shader lshader;
 
+	Shader rayShader;
+
+
 	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 	glm::mat4 line = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
@@ -60,6 +72,20 @@ private:
 	float pa = pi / 2;
 	float dx, dy;
 
+	Map map;
+
+	float test[8] = {
+			700.0f, 200.0f,
+			1100.0f, 500.0f,
+
+			900, 300,
+			1300, 400
+	};
+
+	float lines[4160];
+	float walls[4160];
+	float horwalls[4160];
+	float vertwalls[4160];
 public:
 	Player();
 	Player(Shader& shader, VertexBufferLayout& layout, VertexBufferLayout& llayout, Map map);
