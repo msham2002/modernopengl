@@ -21,7 +21,6 @@ private:
 	float centerX = 208.0f;
 	float centerY = 288.0f;
 
-	//test centers
 	float cx = 208.0f;
 	float cy = 288.0f;
 
@@ -31,7 +30,7 @@ private:
 	float rot = 0.0f;
 
 	//Player
-	float positions[16] = { //centery 288, y1 280, y2 296 
+	float positions[16] = { 
 		200.0f, 280.0f, 0.0f, 0.0f, //last 2 are texture coordinates
 		216.0f, 280.0f, 1.0f, 0.0f,
 		216.0f, 296.0f, 1.0f, 1.0f,
@@ -49,6 +48,7 @@ private:
 
 	VertexBufferLayout layout;
 	Shader shader;
+	Shader texShader;
 	VertexBuffer vb;
 	IndexBuffer ib;
 	Texture texture;
@@ -56,13 +56,16 @@ private:
 
 	//ray
 	VertexArray lvao;
-	//VertexBuffer lvb;
 	VertexBufferLayout llayout;
 	IndexBuffer lib;
-	Shader lshader;
+	//Shader lshader;
 
 	Shader rayShader;
 
+	Texture floorceiling;
+	VertexBuffer wallvb;
+	VertexBuffer rays;
+	VertexBuffer fcvb;
 
 	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 	glm::mat4 line = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
@@ -74,21 +77,20 @@ private:
 
 	Map map;
 
-	float test[8] = {
-			700.0f, 200.0f,
-			1100.0f, 500.0f,
-
-			900, 300,
-			1300, 400
-	};
-
-	float lines[4160];
-	float walls[4160];
+	float *lines;
+	//float walls[4160];
 	float horwalls[4160];
 	float vertwalls[4160];
+	//float texwalls[8320];
+	//float wallEdge[8320];
+	float *texWalls;
+	float *texFloors;
+	float *texCeil;
+	float *texFloorCeil;
 public:
 	Player();
 	Player(Shader& shader, VertexBufferLayout& layout, VertexBufferLayout& llayout, Map map);
+	~Player();
 
 	void AddBuffer();
 	void Bind();
@@ -97,4 +99,5 @@ public:
 	void Move();
 	void Keyboard(const Uint8* keystate);
 	void Line(glm::mat4& proj);
+	void texLine2(glm::mat4& proj);
 };

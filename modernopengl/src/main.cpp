@@ -33,7 +33,7 @@ void close() {
 	SDL_Quit();
 }
 
-int mapX = 10, mapY = 10, mapS = 100;
+int mapX = 20, mapY = 20, mapS = 400;
 
 int main(int argc, char* argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -60,16 +60,17 @@ int main(int argc, char* argv[]) {
 	Map map;
 	
 	float positions[] = { // 656
-		0.0f, 576.0f, 0.0f, 0.0f, //last 2 are texture coordinates
-		64.0f, 576.0f, 1.0f, 0.0f,
-		64.0f, 640.0f, 1.0f, 1.0f,
-		00.0f, 640.0f, 0.0f, 1.0f
+		0.0f, 608.0f, 0.0f, 0.0f, //last 2 are texture coordinates
+		32.0f, 608.0f, 1.0f, 0.0f,
+		32.0f, 640.0f, 1.0f, 1.0f,
+		0.0f, 640.0f, 0.0f, 1.0f
 	};
 	
 	GLuint indices[] = {
 		0, 1, 2,
 		2, 3, 0
 	};
+	
 	
 	//blending for transparent pixels
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -109,8 +110,10 @@ int main(int argc, char* argv[]) {
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	
 	Renderer renderer;
+
 
 	//game loop
 	while (!quit) {
@@ -122,6 +125,7 @@ int main(int argc, char* argv[]) {
 		}
 		//update logic
 
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.Bind();
 		map.DrawMap(vao, ib, shader, proj, renderer);
@@ -130,6 +134,7 @@ int main(int argc, char* argv[]) {
 		p.Move();
 		p.Bind();
 		p.Draw(renderer, proj);
+
 		SDL_GL_SwapWindow(window);
 	}
 	close();

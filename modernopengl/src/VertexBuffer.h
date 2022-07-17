@@ -12,4 +12,5 @@ public:
 
 	void Bind() const;
 	void UnBind() const;
+	void Update(const void* data, GLuint size) const;
 };

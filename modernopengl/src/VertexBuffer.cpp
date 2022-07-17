@@ -21,3 +21,9 @@ void VertexBuffer::Bind() const{
 void VertexBuffer::UnBind() const{
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+void VertexBuffer::Update(const void* data, GLuint size) const{
+	glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW);
+}
+
