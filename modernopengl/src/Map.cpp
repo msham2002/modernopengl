@@ -7,7 +7,7 @@ void Map::DrawMap(const VertexArray& vao, const IndexBuffer& ib, Shader& shader,
 	Texture blank("res/Textures/tile64black.png");
 	for (int i = 0; i < mapY; ++i) {
 		for (int j = 0; j < mapX; ++j) {
-			if (map[i][j] == 1) {
+			if (map[i][j] != 0) {
 				wall.Bind(0);
 				shader.SetUniform1i("u_Texture", 0);
 				model = glm::translate(glm::mat4(1.0f), glm::vec3(j * 32, -i * 32, 0));

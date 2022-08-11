@@ -10,16 +10,18 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <iostream>
+#include "Map.h"
 
-class Object2d {
+class Enemy {
 protected:
 	Shader shader;
 private:
 	bool hit = false;
 public:
 
-	float centerX = 384;
-	float centerY = 320;
+	float centerX, centerY;
+	float playerX, playerY;
+	float angle;
 
 	float positions[8] = {
 		centerX, centerY,
@@ -39,15 +41,21 @@ public:
 	VertexArray vao;
 	VertexBufferLayout layout;
 
-	Object2d();
-	Object2d(Shader& shader, VertexBufferLayout& layout);
-	~Object2d();
-	
+	Map map;
+
+	Enemy();
+	Enemy(Shader& shader, VertexBufferLayout& layout, float centerX, float centerY, Map map);
+	~Enemy();
+
 	void AddBuffer();
 	void Bind();
 	void Draw(Renderer renderer, glm::mat4& proj);
+	void SetAngle(float angle);
+	void SetPlayerPos(float playerX, float playerY);
+	void Move();
 	//float* GetBufferData();
 	void CheckForHit();
 	bool IsHit();
-	
+	bool operator!= (const Enemy& enemy);
+
 };

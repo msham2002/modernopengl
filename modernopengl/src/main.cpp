@@ -18,13 +18,17 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "Map.h"
-//#include "Object2d.h"	
+#include "Object2d.h"	
+#include "Enemy.h"
 #include "Player.h"
 
 SDL_Window* window = NULL;
 SDL_GLContext context;
 
 const GLint WIDTH = 1680, HEIGHT = 780;
+
+//1680 x 780
+//1040 x 780
 
 void close() {
 	SDL_GL_DeleteContext(context);
@@ -98,14 +102,38 @@ int main(int argc, char* argv[]) {
 	shader.Bind();
 	shader.SetUniformMat4f("u_MVP", mvp);
 
+	Shader test("res/shaders/Ray.shader");
+	test.Bind();
+	test.SetUniformMat4f("u_MVP", mvp);
+
 	vao.UnBind();
 	vb.UnBind();
 	ib.UnBind();
 	shader.UnBind();
 	
-	Player p(shader, layout, llayout, map);
+  	Player p(shader, layout, llayout, map);
 	p.AddBuffer();
 	p.Bind();
+
+	//Object2d o(test, llayout);
+	//o.AddBuffer();
+	
+	//Enemy enemy(test, llayout, 384, 320);
+	//enemy.AddBuffer();
+
+	Enemy e1(test, llayout, 320, 160, map);
+	Enemy e2(test, llayout, 420, 220, map);
+	Enemy e3(test, llayout, 576, 450, map);
+	Enemy e4(test, llayout, 330, 550, map);
+	Enemy e5(test, llayout, 105, 370, map);
+	Enemy del(test, llayout, -100, -100, map);
+	Enemy enemies[5];
+
+	enemies[0] = e1;
+	enemies[1] = e2;
+	enemies[2] = e3;
+	enemies[3] = e4;
+	enemies[4] = e5;
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
@@ -122,18 +150,40 @@ int main(int argc, char* argv[]) {
 				quit = true;
 			}
 			//events
+			p.HandleEvent(e);
+			
 		}
 		//update logic
 
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.Bind();
-		map.DrawMap(vao, ib, shader, proj, renderer);
+		//map.DrawMap(vao, ib, shader, proj, renderer);
 		const Uint8* keystate = SDL_GetKeyboardState(NULL);
+
+
+		if (p.isShooting()) {
+			for (int i = 0; i < 5; ++i)
+			{
+				enemies[i].CheckForHit();
+				if (enemies[i].IsHit() == true) {
+					enemies[i] = del;
+				}
+			}
+		}
+
+		for (int i = 0; i < 5; ++i) {
+			if(enemies[i] != del)
+				enemies[i].Move();
+		}
+
 		p.Keyboard(keystate);
 		p.Move();
 		p.Bind();
 		p.Draw(renderer, proj);
+		//p.DrawSprites(o, renderer, proj);
+		p.DrawEnemies(enemies, renderer, proj);
+		p.DrawGun();
 
 		SDL_GL_SwapWindow(window);
 	}
