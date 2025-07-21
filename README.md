@@ -25,8 +25,8 @@ This project uses CMake to generate a build system.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/msham2002/raycaster.git](https://github.com/msham2002/raycaster.git)
-    cd modernopengl
+    git clone https://github.com/msham2002/raycaster.git
+    cd raycaster
     ```
 
 2.  **Generate project files:**
