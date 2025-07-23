@@ -345,3 +345,7 @@ CMakeCache.txt
 CMakeFiles/
 CMakeScripts/
 cmake_install.cmake
+
+# allow these specific libraries in vendor directory
+!vendor/**/*.lib
+!vendor/**/*.dll
